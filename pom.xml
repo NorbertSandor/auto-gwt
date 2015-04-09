@@ -82,6 +82,7 @@
 				<configuration>
 					<source>1.7</source>
 					<target>1.7</target>
+					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -95,6 +96,7 @@
 							<goal>testCompile</goal>
 						</goals>
 						<configuration>
+							<encoding>UTF-8</encoding>
 							<outputDirectory>src/main/xtend-gen</outputDirectory>
 							<testOutputDirectory>src/test/xtend-gen</testOutputDirectory>
 						</configuration>
