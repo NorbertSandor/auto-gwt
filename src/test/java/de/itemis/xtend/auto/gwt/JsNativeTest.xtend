@@ -4,23 +4,45 @@ import org.eclipse.xtend.core.compiler.batch.XtendCompilerTester
 import org.junit.Test
 
 class JsNativeTest {
-	
+
 	extension XtendCompilerTester compiler = XtendCompilerTester.newXtendCompilerTester(JsNativeTest)
-	
+
 	@Test def void testSimple() {
-//		'''
-//		package foo
-//		
-//		import «JsNative.name»
-//		
-//		class MyJsNativeCode {
-//			@JsNative def String doStuff(String param1) ''«»'
-//				// some javascript code here
-//			''«»'
-//		}
-//		
-//		'''.assertCompilesTo('''
-//		
-//		''')		
-	}	
+		'''
+			import «JsNative.name»
+			
+			class C /* extends JavaScriptObject */ {
+			  protected new() {
+			  }
+			
+			  @JsNative
+			  def void a() '«»''
+			    this.a();
+			  '«»''
+			
+			  @JsNative
+			  def void b() '«»''
+			    this.b();
+			  '«»''
+			}
+		'''.assertCompilesTo('''
+			import de.itemis.xtend.auto.gwt.JsNative;
+			
+			@SuppressWarnings("all")
+			public class C {
+			  protected C() {
+			  }
+			
+			  @JsNative
+			  public final native void a() /*-{
+			    this.a();
+			  }-*/;
+			
+			  @JsNative
+			  public final native void b() /*-{
+			    this.b();
+			  }-*/;
+			}
+		''')
+	}
 }
