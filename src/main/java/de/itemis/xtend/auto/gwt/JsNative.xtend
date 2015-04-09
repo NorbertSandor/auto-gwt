@@ -58,7 +58,13 @@ class JsNativeProcessor extends AbstractMethodProcessor {
 		val startIndex = contents.substring(0, markerStart).lastIndexOf('{')
 		val endIndex = contents.substring(markerStart).indexOf('}') + markerStart
 		val jsCode = annotatedMethod.body.toString.trimTripleQuotes
-		path.contents = contents.substring(0, startIndex)+"/*-{"+jsCode+"}-*/;"+contents.substring(endIndex+1)
+
+		val newContents = contents.substring(0, startIndex) + "/*-{" + jsCode + "}-*/;" +
+			contents.substring(endIndex + 1)
+		path.contents = newContents
+		do {
+			Thread.sleep(100);
+		} while (path.contents.toString != newContents)
 	}
 	
 	private def String trimTripleQuotes(String s) {
